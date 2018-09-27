@@ -1,19 +1,45 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './App.css';
 import Persons from '../components/Persons/Persons';
 import Radium, { StyleRoot } from 'radium';
 import Cockpit from '../components/Cockpit/Cockpit';
 
+class App extends PureComponent {
+  constructor(props) {
+    super(props);
+    console.log('app.js - constructor()')
 
-class App extends Component {
-  state = {
-    persons: [
-      {id: 'asdas', name: 'Max', age: 28 },
-      {id: 'asdas1', name: "John", age: 29},
-      {id: 'asdas2', name: "Monika", age: 29},
-    ],
-    username:'JohnnyBravo',
-    showPersons: false,
+    this.state = {
+      persons: [
+        {id: 'asdas', name: 'Max', age: 28 },
+        {id: 'asdas1', name: "John", age: 29},
+        {id: 'asdas2', name: "Monika", age: 29},
+      ],
+      username:'JohnnyBravo',
+      showPersons: false,
+    };
+  }
+  
+  componentWillMount() {
+    console.log('[App.js] inside componentwillmount')
+  }
+
+  componentDidMount() {
+    console.log('[App.js] inside componentDidMount')
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('[UPDATE App.js] shouldComponentUpdate', nextProps, nextState)
+  //   return true;
+  // }
+
+  componentWillUpdate(nextProps, nextState) {
+      console.log('[UPDATE App.js] componentWillUpdate()', nextProps, nextState)
+  }
+
+  componentDidUpdate(nextProps, nextState) {
+      console.log('[UPDATE App.js] componentDidUpdate()', nextProps, nextState)
+
   }
 
   usernameHandler = (newUsername) => {
@@ -66,16 +92,8 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid black',
-      padding: '8px',
-      cursor: 'pointer',
-      
-    };
-    let buttonOption = "button"
+    console.log('app.js inside render()')
+
     let persons = null;
 
     if (this.state.showPersons) { //can set if's and shit because not in the return statement yet
@@ -87,16 +105,11 @@ class App extends Component {
           changed={this.nameChangedHandler}/>
         </div> 
       )
-      style.backgroundColor = 'red';
-      buttonOption = "button2"
-      
     }
     
-    
-
     return (
-      
           <div className="App">
+          <button onClick={() => {this.setState({showPersons:true})}}>Show Persons</button>
             <Cockpit 
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
@@ -106,9 +119,6 @@ class App extends Component {
             
             {persons}
           </div>
-      
-      
-      
     )
   }
 }

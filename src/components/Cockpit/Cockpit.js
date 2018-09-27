@@ -1,5 +1,6 @@
 import React from 'react';
 import './Cockpit.css';
+import Auxiliary from '../../hoc/Auxiliary';
 
 const cockpit = (props) => {
     let buttonOption = "button"
@@ -15,12 +16,12 @@ const cockpit = (props) => {
     }
     
     return(
-        <div>
+        <Auxiliary>
             <h1>Hi Im a React App!!</h1>
             <p className={classes.join(' ')}>This is really working!</p>
             <button className={buttonOption} 
             onClick={props.toggle}>Toggle Persons</button>
-        </div>
+        </Auxiliary>
     );
 }
 export default cockpit;
