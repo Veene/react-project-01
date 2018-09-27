@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person';
-import UserInput from './UserInput';
-import UserOutput from './UserOutput';
+import Persons from '../components/Persons/Persons';
 import Radium, { StyleRoot } from 'radium';
+import Cockpit from '../components/Cockpit/Cockpit';
+
 
 class App extends Component {
   state = {
@@ -65,7 +65,6 @@ class App extends Component {
     this.setState({showPersons: !doesShow});
   }
 
-
   render() {
     const style = {
       backgroundColor: 'green',
@@ -82,17 +81,10 @@ class App extends Component {
     if (this.state.showPersons) { //can set if's and shit because not in the return statement yet
       persons = (
         <div>
-          {/* if we need an array, always use map, to work through the array and return what you need */}
-          {this.state.persons.map((person, index) => {
-            return <Person 
-            // to give index to the function need to use arrow function or else requires BIND
-            click={() => this.deletePersonHandler(index)}
-            key={person.id} 
-            name={person.name} 
-            age={person.age}
-            // once again, to pass it values (event, person.id) requires the arrow function
-            changed={(event) => this.nameChangedHandler(event, person.id)} />
-          })}
+          <Persons 
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangedHandler}/>
         </div> 
       )
       style.backgroundColor = 'red';
@@ -100,21 +92,17 @@ class App extends Component {
       
     }
     
-    let classes = [];
-    if(this.state.persons.length <= 2){
-      classes.push('red'); //classes will be red ['red']
-    }
-    if(this.state.persons.length <= 1) {
-      classes.push('bold');
-    }
+    
 
     return (
       
           <div className="App">
-            <h1>Hi Im a React App!!</h1>
-            <p className={classes.join(' ')}>This is really working!</p>
-            <button className={buttonOption} 
-            onClick={this.togglePersonsHandler}>Toggle Persons</button>
+            <Cockpit 
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangedHandler}
+            toggle={this.togglePersonsHandler}
+            showPersons={this.state.showPersons}/>
             
             {persons}
           </div>
